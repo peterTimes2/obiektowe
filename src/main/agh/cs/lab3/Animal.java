@@ -40,7 +40,8 @@ public class Animal {
                 handleMove(false);
             }
             case BACKWARD -> {
-                handleMove(true);            }
+                handleMove(true);
+            }
         }
     }
 
