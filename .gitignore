@@ -1,0 +1,8 @@
+#dependencies
+/lib
+
+#ide config
+/.idea
+
+#build
+/out
