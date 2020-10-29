@@ -17,10 +17,10 @@ class AnimalTest {
         testAnimal.setOrientation(MapDirection.NORTH);
 
         testAnimal.move(MoveDirection.RIGHT);
-        assertTrue(testAnimal.getOrientation().equals(MapDirection.EAST));
+        assertEquals(testAnimal.getOrientation(), MapDirection.EAST);
 
         testAnimal.move(MoveDirection.LEFT);
-        assertTrue(testAnimal.getOrientation().equals(MapDirection.NORTH));
+        assertEquals(testAnimal.getOrientation(), MapDirection.NORTH);
     }
 
     @Test

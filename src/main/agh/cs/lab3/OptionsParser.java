@@ -6,7 +6,7 @@ import java.util.List;
 
 public class OptionsParser {
     static public List<MoveDirection> parse(String[] rawDirections) {
-        List<MoveDirection> result = new LinkedList();
+        List<MoveDirection> result = new LinkedList<>();
 
         for (String dir : rawDirections) {
             switch (dir) {
