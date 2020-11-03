@@ -3,6 +3,8 @@ package agh.cs.lab3;
 import agh.cs.lab2.MapDirection;
 import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
+import agh.cs.lab4.IWorldMap;
+import agh.cs.lab4.RectangularMap;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -14,7 +16,8 @@ public class AnimalWalkingTest {
     @Test
     @DisplayName("Whole animal walking process")
     void test() {
-        Animal testAnimal = new Animal();
+        IWorldMap map = new RectangularMap(10, 5);
+        Animal testAnimal = new Animal(map);
         testAnimal.setPosition(new Vector2d(2, 2));
         testAnimal.setOrientation(MapDirection.NORTH);
         Vector2d expectedFinalPosition = new Vector2d(2, 2);

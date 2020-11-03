@@ -3,6 +3,8 @@ package agh.cs.lab3;
 import agh.cs.lab2.MapDirection;
 import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
+import agh.cs.lab4.IWorldMap;
+import agh.cs.lab4.RectangularMap;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +15,8 @@ class AnimalTest {
     @Test
     @DisplayName("Switching directions to left and right")
     void moveTest1() {
-        Animal testAnimal = new Animal();
+        IWorldMap map = new RectangularMap(10, 5);
+        Animal testAnimal = new Animal(map);
         testAnimal.setOrientation(MapDirection.NORTH);
 
         testAnimal.move(MoveDirection.RIGHT);
@@ -26,7 +29,8 @@ class AnimalTest {
     @Test
     @DisplayName("Moving forward and backwards")
     void moveTest2() {
-        Animal testAnimal = new Animal();
+        IWorldMap map = new RectangularMap(10, 5);
+        Animal testAnimal = new Animal(map);
         testAnimal.setPosition( new Vector2d(2, 2));
         testAnimal.setOrientation(MapDirection.SOUTH);
 
@@ -40,7 +44,8 @@ class AnimalTest {
     @Test
     @DisplayName("Cannot move outside of the board")
     void moveTest3() {
-        Animal testAnimal = new Animal();
+        IWorldMap map = new RectangularMap(5, 5);
+        Animal testAnimal = new Animal(map);
         testAnimal.setPosition( new Vector2d(5, 2));
         testAnimal.setOrientation(MapDirection.EAST);
 
