@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class RectangularMap implements IWorldMap {
-    final static private Vector2d boardLowerLeftCorner = new Vector2d(0 ,0);;
-    final private Vector2d boardUpperRightCorner;
-    final private MapVisualiser visualiser;
-    private List<Animal> animals;
+    static private final Vector2d boardLowerLeftCorner = new Vector2d(0 ,0);
+    private final Vector2d boardUpperRightCorner;
+    private final MapVisualiser visualiser;
+    private final List<Animal> animals;
 
     public RectangularMap(int width, int height) {
         boardUpperRightCorner = new Vector2d(width, height);
@@ -22,16 +22,9 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        if (!position.precedes(boardUpperRightCorner)) {
-            return false;
-        }
-        if (!position.follows(boardLowerLeftCorner)) {
-            return false;
-        }
-        if (isOccupied(position)) {
-            return false;
-        }
-        return true;
+        return position.precedes(boardUpperRightCorner)
+            && position.follows(boardLowerLeftCorner)
+            && !isOccupied(position);
     }
 
     @Override
@@ -55,12 +48,7 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        for (Animal animal: animals) {
-            if (animal.getPosition().equals(position)) {
-                return true;
-            }
-        }
-        return false;
+        return objectAt(position).isPresent();
     }
 
     @Override

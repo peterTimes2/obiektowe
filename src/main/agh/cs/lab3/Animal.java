@@ -1,16 +1,17 @@
 package agh.cs.lab3;
-import agh.cs.lab2.*;
+
+import agh.cs.lab2.MapDirection;
+import agh.cs.lab2.MoveDirection;
+import agh.cs.lab2.Vector2d;
 import agh.cs.lab4.IWorldMap;
 
 public class Animal {
-    final private IWorldMap map;
+    private final IWorldMap map;
     private MapDirection orientation;
     private Vector2d position;
 
     public Animal(IWorldMap map) {
-        this.map = map;
-        this.position = new Vector2d(2,2);
-        this.orientation = MapDirection.NORTH;
+        this(map, new Vector2d(2,2));
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
