@@ -3,6 +3,7 @@ package agh.cs.lab4;
 import agh.cs.lab3.Animal;
 import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
+import agh.cs.lab5.IMapElement;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,5 +61,5 @@ public interface IWorldMap {
      *            The position of the object.
      * @return Object or empty Optional if the position is not occupied.
      */
-    Optional<Object> objectAt(Vector2d position);
+    Optional<IMapElement> objectAt(Vector2d position);
 }

@@ -30,7 +30,7 @@ public class MapIntegrationTest {
 
         assertEquals(first.getPosition(), new Vector2d(2, 0));
         assertEquals(first.getOrientation(), MapDirection.SOUTH);
-        assertEquals(second.getPosition(), new Vector2d(3, 5));
+        assertEquals(second.getPosition(), new Vector2d(3, 4));
         assertEquals(second.getOrientation(), MapDirection.NORTH);
     }
 }

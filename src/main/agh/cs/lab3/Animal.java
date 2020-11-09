@@ -4,8 +4,9 @@ import agh.cs.lab2.MapDirection;
 import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
 import agh.cs.lab4.IWorldMap;
+import agh.cs.lab5.IMapElement;
 
-public class Animal {
+public class Animal implements IMapElement {
     private final IWorldMap map;
     private MapDirection orientation;
     private Vector2d position;
@@ -28,6 +29,7 @@ public class Animal {
         this.orientation = orientation;
     }
 
+    @Override
     public Vector2d getPosition() {
         return position;
     }
@@ -44,22 +46,14 @@ public class Animal {
             case WEST -> "←";
             case EAST -> "→";
         };
-    };
+    }
 
     public void move(MoveDirection direction) {
         switch (direction) {
-            case LEFT -> {
-                setOrientation(orientation.previous());
-            }
-            case RIGHT -> {
-                setOrientation(orientation.next());
-            }
-            case FORWARD -> {
-                handleMove(false);
-            }
-            case BACKWARD -> {
-                handleMove(true);
-            }
+            case LEFT -> setOrientation(orientation.previous());
+            case RIGHT -> setOrientation(orientation.next());
+            case FORWARD -> handleMove(false);
+            case BACKWARD -> handleMove(true);
         }
     }
 

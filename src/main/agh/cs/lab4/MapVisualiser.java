@@ -1,6 +1,8 @@
 package agh.cs.lab4;
 
 import agh.cs.lab2.Vector2d;
+import agh.cs.lab5.IMapElement;
+
 import java.util.Optional;
 
 /**
@@ -75,8 +77,12 @@ public class MapVisualiser {
     private String drawObject(Vector2d currentPosition) {
         String result;
         if (this.map.isOccupied(currentPosition)) {
-            Optional<Object> object = this.map.objectAt(currentPosition);
-            result = object.orElse(EMPTY_CELL).toString();
+            Optional<IMapElement> object = this.map.objectAt(currentPosition);
+            if (object.isPresent()) {
+                result = object.get().toString();
+            } else {
+                result = EMPTY_CELL;
+            }
         } else {
             result = EMPTY_CELL;
         }
