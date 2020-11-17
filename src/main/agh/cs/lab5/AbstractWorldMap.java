@@ -6,22 +6,23 @@ import agh.cs.lab3.Animal;
 import agh.cs.lab4.IWorldMap;
 import agh.cs.lab4.MapVisualiser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public abstract class AbstractWorldMap implements IWorldMap {
     private final Vector2d boardLowerLeftCorner;
     private final Vector2d boardUpperRightCorner;
+    protected final Map<Vector2d, List<IMapElement>> board;
     protected final MapVisualiser visualiser;
     protected final List<Animal> animals;
+
 
     public AbstractWorldMap(Vector2d boardLowerLeft, Vector2d boardUpperRight) {
         animals = new ArrayList<>();
         visualiser = new MapVisualiser(this);
         boardLowerLeftCorner = boardLowerLeft;
         boardUpperRightCorner = boardUpperRight;
+        board = new HashMap<>();
     }
 
     // returns stream from every object at the map
@@ -35,12 +36,13 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    public boolean place(Animal animal) {
+    public void place(Animal animal) {
         if (canMoveTo(animal.getPosition())) {
             animals.add(animal);
-            return true;
+            putOnBoard(animal.getPosition(), animal);
+            return;
         }
-        return false;
+        throw new IllegalArgumentException("field " + animal.getPosition() + " is occupied or beyond map borders");
     }
 
     @Override
@@ -48,8 +50,15 @@ public abstract class AbstractWorldMap implements IWorldMap {
         int animalIndex = 0;
         int animalsLength = animals.size();
         for (MoveDirection direction: directions) {
-            animals.get(animalIndex).move(direction);
+            Animal animal = animals.get(animalIndex);
+            Vector2d oldAnimalPosition = animal.getPosition();
+            animal.move(direction);
             animalIndex = (animalIndex + 1) % animalsLength;
+            if (!animal.getPosition().equals(oldAnimalPosition)) {
+                List<IMapElement> oldList = board.get(oldAnimalPosition);
+                oldList.remove(animal);
+                putOnBoard(animal.getPosition(), animal);
+            }
         }
     }
 
@@ -60,13 +69,21 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     @Override
     public Optional<? extends IMapElement> objectAt(Vector2d position) {
-        return getMapElementsStream()
-                .filter(mapElement -> mapElement.getPosition().equals(position))
-                .findFirst();
+        List<IMapElement> value = board.get(position);
+        if (value == null || value.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(value.get(value.size() - 1));
     }
 
     @Override
     public String toString() {
         return visualiser.draw(boardLowerLeftCorner, boardUpperRightCorner);
+    }
+
+    @Override
+    public void putOnBoard(Vector2d position, IMapElement element) {
+        board.putIfAbsent(position, new LinkedList<>());
+        board.get(position).add(element);
     }
 }

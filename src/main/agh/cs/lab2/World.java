@@ -9,13 +9,18 @@ import java.util.List;
 
 public class World {
     public static void main(String[] args) {
-        List<MoveDirection> directions = OptionsParser.parse(args);
-        IWorldMap map = new GrassField(10);
-        map.place(new Animal(map));
-        map.place(new Animal(map,new Vector2d(3,4)));
-        System.out.println(map);
-        map.run(directions);
-        System.out.println(map);
+        try {
+            IWorldMap map = new GrassField(10);
+            List<MoveDirection> directions = OptionsParser.parse(args);
+            map.place(new Animal(map));
+            map.place(new Animal(map));
+            System.out.println(map);
+            map.run(directions);
+            System.out.println(map);
+        } catch (Throwable e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
     }
 }
 

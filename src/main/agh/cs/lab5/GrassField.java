@@ -6,7 +6,7 @@ import agh.cs.lab4.IWorldMap;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class GrassField extends AbstractWorldMap implements IWorldMap {
+public class GrassField extends AbstractWorldMap {
     private final List<Grass> grasses;
 
     public GrassField(int grassCount) {
@@ -21,7 +21,9 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
             while (isOccupied(randomPosition)) {
                 randomPosition = generateRandomPosition(grassCount);
             }
-            grasses.add(new Grass(randomPosition));
+            Grass grass = new Grass(randomPosition);
+            grasses.add(grass);
+            putOnBoard(randomPosition, grass);
         }
     }
 

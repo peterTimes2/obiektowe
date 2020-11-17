@@ -28,8 +28,12 @@ class RectangularMapTest {
     void place() {
         IWorldMap map = new RectangularMap(10, 10);
         Animal animal = new Animal(map,new Vector2d(3,4));
-        assertTrue(map.place(animal));
-        assertFalse(map.place(animal));
+        try {
+            map.place(animal);
+        } catch (IllegalArgumentException e) {
+            fail("animal wasn't placed on map");
+        }
+        assertThrows(IllegalArgumentException.class, () -> map.place(animal));
     }
 
     @Test

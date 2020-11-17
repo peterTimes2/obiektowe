@@ -32,7 +32,7 @@ public interface IWorldMap {
      *            The animal to place on the map.
      * @return True if the animal was placed. The animal cannot be placed if the map is already occupied.
      */
-    boolean place(Animal animal);
+    void place(Animal animal);
 
     /**
      * Move the animal on the map according to the provided move directions. Every
@@ -62,4 +62,16 @@ public interface IWorldMap {
      * @return Object or empty Optional if the position is not occupied.
      */
     Optional<? extends IMapElement> objectAt(Vector2d position);
+
+    /**
+     * Add element to a given position
+     *
+     * @param position
+     *          The position of the element
+     *
+     * @param element
+     *          Element to be put on the board
+     *
+     */
+    void putOnBoard(Vector2d position, IMapElement element);
 }

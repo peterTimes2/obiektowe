@@ -24,11 +24,16 @@ public class AnimalWalkingTest {
 
         // args are parsed correctly and animal moves as expected
         String[] mockArgs = {
-                "l", "forward", "wrongOne", "r",
-                "backward", "unexpectedOne", "b",
+                "l", "forward", "r",
+                "backward", "b",
                 "right", "f", "left",
         };
-        List<MoveDirection> directions =  OptionsParser.parse(mockArgs);
+        List<MoveDirection> directions = null;
+        try {
+            directions = OptionsParser.parse(mockArgs);
+        } catch (IllegalArgumentException e) {
+            fail("arguments parsing throwed an exception");
+        }
         for (MoveDirection direction : directions) {
             testAnimal.move(direction);
         }
@@ -44,5 +49,13 @@ public class AnimalWalkingTest {
         }
         expectedFinalPosition = new Vector2d(2,0);
         assertTrue(testAnimal.getPosition().equals(expectedFinalPosition));
+    }
+    void testWithInvalidArguments() {
+        String[] mockArgs = {
+                "l", "forward", "r",
+                "backward", "wrongOne", "b",
+                "right", "f", "unexpectedOne", "left",
+        };
+        assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(mockArgs));
     }
 }

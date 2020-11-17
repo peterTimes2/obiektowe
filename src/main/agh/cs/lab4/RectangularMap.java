@@ -5,7 +5,7 @@ import agh.cs.lab5.IMapElement;
 
 import java.util.stream.Stream;
 
-public class RectangularMap extends AbstractWorldMap implements IWorldMap {
+public class RectangularMap extends AbstractWorldMap {
     public RectangularMap(int width, int height) {
         super(new Vector2d(0 ,0), new Vector2d(width - 1, height - 1));
     }
