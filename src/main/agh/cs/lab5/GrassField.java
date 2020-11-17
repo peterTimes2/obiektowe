@@ -3,45 +3,43 @@ package agh.cs.lab5;
 import agh.cs.lab2.Vector2d;
 import agh.cs.lab4.IWorldMap;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap implements IWorldMap {
-    private final List<IMapElement> grasses;
+    private final List<Grass> grasses;
 
     public GrassField(int grassCount) {
         super(new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE), new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE));
-        this.grasses = new ArrayList<>();
+        this.grasses = new LinkedList<>();
         plantGrassSeeds(grassCount);
     }
 
     private void plantGrassSeeds(int grassCount) {
         for (int i = 0; i < grassCount; i++) {
-            int randomX = (int)(Math.random() * (StrictMath.sqrt(grassCount * 10) + 1));
-            int randomY = (int)(Math.random() * (StrictMath.sqrt(grassCount * 10) + 1));
-            Vector2d randomPosition = new Vector2d(randomX, randomY);
-
+            Vector2d randomPosition = generateRandomPosition(grassCount);
             while (isOccupied(randomPosition)) {
-                randomX = (int)(Math.random() * (StrictMath.sqrt(grassCount * 10) + 1));
-                randomY = (int)(Math.random() * (StrictMath.sqrt(grassCount * 10) + 1));
-                randomPosition = new Vector2d(randomX, randomY);
+                randomPosition = generateRandomPosition(grassCount);
             }
             grasses.add(new Grass(randomPosition));
         }
     }
 
+    private Vector2d generateRandomPosition(int grassCount) {
+        int randomX = (int)(Math.random() * (StrictMath.sqrt(grassCount * 10) + 1));
+        int randomY = (int)(Math.random() * (StrictMath.sqrt(grassCount * 10) + 1));
+        return new Vector2d(randomX, randomY);
+    }
+
     @Override
-    protected Stream<IMapElement> getMapElementsStream() {
+    protected Stream<? extends IMapElement> getMapElementsStream() {
         return Stream.concat(animals.stream(), grasses.stream());
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
         //noinspection OptionalGetWithoutIsPresent
-        return super.canMoveTo(position) || objectAt(position).get() instanceof Grass;
+        return super.canMoveTo(position) || !objectAt(position).get().isBlocking();
     }
 
     @Override
@@ -49,7 +47,7 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
         Vector2d lowerLeft;
         Vector2d upperRight;
 
-        Optional<IMapElement> first = getMapElementsStream().findFirst();
+        Optional<? extends IMapElement> first = getMapElementsStream().findFirst();
         if (first.isPresent()) {
             lowerLeft = first.get().getPosition();
             upperRight = lowerLeft;
@@ -58,7 +56,7 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
             upperRight = new Vector2d(0, 0);
         }
 
-        Iterator<IMapElement> elementsIterator = getMapElementsStream().iterator();
+        Iterator<? extends IMapElement> elementsIterator = getMapElementsStream().iterator();
         while (elementsIterator.hasNext()) {
             Vector2d position = elementsIterator.next().getPosition();
             if (!position.follows(lowerLeft)) {

@@ -2,16 +2,14 @@ package agh.cs.lab5;
 
 import agh.cs.lab2.Vector2d;
 
-public class Grass implements IMapElement {
-    private final Vector2d position;
-
+public class Grass extends AbstractMapElement {
     public Grass(Vector2d position) {
-        this.position = position;
+        super(position);
     }
 
     @Override
-    public Vector2d getPosition() {
-        return position;
+    public boolean isBlocking() {
+        return false;
     }
 
     @Override

@@ -61,5 +61,5 @@ public interface IWorldMap {
      *            The position of the object.
      * @return Object or empty Optional if the position is not occupied.
      */
-    Optional<IMapElement> objectAt(Vector2d position);
+    Optional<? extends IMapElement> objectAt(Vector2d position);
 }

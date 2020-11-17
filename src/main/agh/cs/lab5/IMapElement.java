@@ -4,4 +4,6 @@ import agh.cs.lab2.Vector2d;
 
 public interface IMapElement {
     Vector2d getPosition();
+    void setPosition(Vector2d position);
+    boolean isBlocking();
 }

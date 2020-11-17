@@ -11,7 +11,7 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    protected Stream<IMapElement> getMapElementsStream() {
+    protected Stream<? extends IMapElement> getMapElementsStream() {
         return animals.stream();
     }
 }

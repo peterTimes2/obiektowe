@@ -4,20 +4,20 @@ import agh.cs.lab2.MapDirection;
 import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
 import agh.cs.lab4.IWorldMap;
-import agh.cs.lab5.IMapElement;
+import agh.cs.lab5.AbstractMapElement;
 
-public class Animal implements IMapElement {
+
+public class Animal extends AbstractMapElement {
     private final IWorldMap map;
     private MapDirection orientation;
-    private Vector2d position;
 
     public Animal(IWorldMap map) {
         this(map, new Vector2d(2,2));
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
+        super(initialPosition);
         this.map = map;
-        this.position = initialPosition;
         this.orientation = MapDirection.NORTH;
     }
 
@@ -30,12 +30,8 @@ public class Animal implements IMapElement {
     }
 
     @Override
-    public Vector2d getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector2d position) {
-        this.position = position;
+    public boolean isBlocking() {
+        return true;
     }
 
     @Override

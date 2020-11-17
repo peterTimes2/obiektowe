@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public abstract class AbstractWorldMap implements IWorldMap {
-    protected final Vector2d boardLowerLeftCorner;
-    protected final Vector2d boardUpperRightCorner;
+    private final Vector2d boardLowerLeftCorner;
+    private final Vector2d boardUpperRightCorner;
     protected final MapVisualiser visualiser;
-    protected final List<IMapElement> animals;
+    protected final List<Animal> animals;
 
     public AbstractWorldMap(Vector2d boardLowerLeft, Vector2d boardUpperRight) {
         animals = new ArrayList<>();
@@ -25,7 +25,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     // returns stream from every object at the map
-    abstract protected Stream<IMapElement> getMapElementsStream();
+    abstract protected Stream<? extends IMapElement> getMapElementsStream();
 
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -48,7 +48,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         int animalIndex = 0;
         int animalsLength = animals.size();
         for (MoveDirection direction: directions) {
-            ((Animal) animals.get(animalIndex)).move(direction);
+            animals.get(animalIndex).move(direction);
             animalIndex = (animalIndex + 1) % animalsLength;
         }
     }
@@ -59,9 +59,9 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    public Optional<IMapElement> objectAt(Vector2d position) {
+    public Optional<? extends IMapElement> objectAt(Vector2d position) {
         return getMapElementsStream()
-                .filter((IMapElement mapElement) -> (mapElement.getPosition().equals(position)))
+                .filter(mapElement -> mapElement.getPosition().equals(position))
                 .findFirst();
     }
 
