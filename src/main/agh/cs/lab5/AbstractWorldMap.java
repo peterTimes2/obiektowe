@@ -5,6 +5,7 @@ import agh.cs.lab2.Vector2d;
 import agh.cs.lab3.Animal;
 import agh.cs.lab4.IWorldMap;
 import agh.cs.lab4.MapVisualiser;
+import agh.cs.lab6.Board;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -12,7 +13,7 @@ import java.util.stream.Stream;
 public abstract class AbstractWorldMap implements IWorldMap {
     private final Vector2d boardLowerLeftCorner;
     private final Vector2d boardUpperRightCorner;
-    protected final Map<Vector2d, List<IMapElement>> board;
+    protected final Board board;
     protected final MapVisualiser visualiser;
     protected final List<Animal> animals;
 
@@ -22,7 +23,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         visualiser = new MapVisualiser(this);
         boardLowerLeftCorner = boardLowerLeft;
         boardUpperRightCorner = boardUpperRight;
-        board = new HashMap<>();
+        board = new Board();
     }
 
     // returns stream from every object at the map
@@ -39,7 +40,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
     public void place(Animal animal) {
         if (canMoveTo(animal.getPosition())) {
             animals.add(animal);
-            putOnBoard(animal.getPosition(), animal);
+            board.putOnBoard(animal.getPosition(), animal);
             return;
         }
         throw new IllegalArgumentException("field " + animal.getPosition() + " is occupied or beyond map borders");
@@ -55,9 +56,9 @@ public abstract class AbstractWorldMap implements IWorldMap {
             animal.move(direction);
             animalIndex = (animalIndex + 1) % animalsLength;
             if (!animal.getPosition().equals(oldAnimalPosition)) {
-                List<IMapElement> oldList = board.get(oldAnimalPosition);
+                List<IMapElement> oldList = board.getElements(oldAnimalPosition);
                 oldList.remove(animal);
-                putOnBoard(animal.getPosition(), animal);
+                board.putOnBoard(animal.getPosition(), animal);
             }
         }
     }
@@ -69,7 +70,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     @Override
     public Optional<? extends IMapElement> objectAt(Vector2d position) {
-        List<IMapElement> value = board.get(position);
+        List<IMapElement> value = board.getElements(position);
         if (value == null || value.isEmpty()) {
             return Optional.empty();
         }
@@ -79,11 +80,5 @@ public abstract class AbstractWorldMap implements IWorldMap {
     @Override
     public String toString() {
         return visualiser.draw(boardLowerLeftCorner, boardUpperRightCorner);
-    }
-
-    @Override
-    public void putOnBoard(Vector2d position, IMapElement element) {
-        board.putIfAbsent(position, new LinkedList<>());
-        board.get(position).add(element);
     }
 }

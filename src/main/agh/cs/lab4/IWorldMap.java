@@ -27,10 +27,10 @@ public interface IWorldMap {
 
     /**
      * Place a animal on the map.
+     * Throws IllegalArgumentException if position is occupied
      *
      * @param animal
      *            The animal to place on the map.
-     * @return True if the animal was placed. The animal cannot be placed if the map is already occupied.
      */
     void place(Animal animal);
 
@@ -62,16 +62,4 @@ public interface IWorldMap {
      * @return Object or empty Optional if the position is not occupied.
      */
     Optional<? extends IMapElement> objectAt(Vector2d position);
-
-    /**
-     * Add element to a given position
-     *
-     * @param position
-     *          The position of the element
-     *
-     * @param element
-     *          Element to be put on the board
-     *
-     */
-    void putOnBoard(Vector2d position, IMapElement element);
 }

@@ -1,7 +1,6 @@
 package agh.cs.lab5;
 
 import agh.cs.lab2.Vector2d;
-import agh.cs.lab4.IWorldMap;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -23,7 +22,7 @@ public class GrassField extends AbstractWorldMap {
             }
             Grass grass = new Grass(randomPosition);
             grasses.add(grass);
-            putOnBoard(randomPosition, grass);
+            board.putOnBoard(randomPosition, grass);
         }
     }
 
