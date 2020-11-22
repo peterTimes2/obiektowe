@@ -1,7 +1,5 @@
 package agh.cs.lab2;
 
-import java.util.Objects;
-
 public class Vector2d {
     final public int x;
     final public int y;
@@ -27,7 +25,10 @@ public class Vector2d {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        int hash = 13;
+        hash += this.x * 31;
+        hash += this.y * 17;
+        return hash;
     }
 
     public boolean precedes(Vector2d other) {

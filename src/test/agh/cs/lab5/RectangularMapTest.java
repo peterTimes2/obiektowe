@@ -94,12 +94,11 @@ class RectangularMapTest {
         map.place(animal4);
 
         assertEquals(map.toString(),
-            " y\\x  0 1 2\r\n" +
-            "  3: -------\r\n" +
-            "  2: | |↓|→|\r\n" +
-            "  1: | |↑|←|\r\n" +
-            "  0: | | | |\r\n" +
-            " -1: -------\r\n"
+            " y\\x  1 2\r\n" +
+            "  3: -----\r\n" +
+            "  2: |↓|→|\r\n" +
+            "  1: |↑|←|\r\n" +
+            "  0: -----\r\n"
         );
     }
 }

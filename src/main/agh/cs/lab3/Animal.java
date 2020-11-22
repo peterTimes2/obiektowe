@@ -6,7 +6,6 @@ import agh.cs.lab2.Vector2d;
 import agh.cs.lab4.IWorldMap;
 import agh.cs.lab5.AbstractMapElement;
 
-
 public class Animal extends AbstractMapElement {
     private final IWorldMap map;
     private MapDirection orientation;

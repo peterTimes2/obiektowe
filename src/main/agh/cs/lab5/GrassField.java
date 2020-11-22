@@ -22,7 +22,7 @@ public class GrassField extends AbstractWorldMap {
             }
             Grass grass = new Grass(randomPosition);
             grasses.add(grass);
-            board.putOnBoard(randomPosition, grass);
+            placeElement(grass);
         }
     }
 
@@ -41,33 +41,5 @@ public class GrassField extends AbstractWorldMap {
     public boolean canMoveTo(Vector2d position) {
         //noinspection OptionalGetWithoutIsPresent
         return super.canMoveTo(position) || !objectAt(position).get().isBlocking();
-    }
-
-    @Override
-    public String toString() {
-        Vector2d lowerLeft;
-        Vector2d upperRight;
-
-        Optional<? extends IMapElement> first = getMapElementsStream().findFirst();
-        if (first.isPresent()) {
-            lowerLeft = first.get().getPosition();
-            upperRight = lowerLeft;
-        } else {
-            lowerLeft = new Vector2d(0, 0);
-            upperRight = new Vector2d(0, 0);
-        }
-
-        Iterator<? extends IMapElement> elementsIterator = getMapElementsStream().iterator();
-        while (elementsIterator.hasNext()) {
-            Vector2d position = elementsIterator.next().getPosition();
-            if (!position.follows(lowerLeft)) {
-                lowerLeft = new Vector2d(Math.min(position.x, lowerLeft.x), Math.min(position.y, lowerLeft.y));
-            }
-            if (!position.precedes(upperRight)) {
-                upperRight = new Vector2d(Math.max(position.x, upperRight.x), Math.max(position.y, upperRight.y));
-            }
-        }
-
-        return visualiser.draw(lowerLeft, upperRight);
     }
 }
